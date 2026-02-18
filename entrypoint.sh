@@ -16,7 +16,7 @@ JM_LOGS=${JM_HOME}/logs
 mkdir -p ${JM_REPORTS} ${JM_LOGS}
 
 TEST_SCENARIO=${TEST_SCENARIO:-test}
-SCENARIOFILE=${JM_SCENARIOS}/Service-Manual-V0.4.jmx
+SCENARIOFILE=${JM_SCENARIOS}/Rampup-Service-Manual-V0.1.jmx
 REPORTFILE=${NOW}-perftest-${TEST_SCENARIO}-report.csv
 LOGFILE=${JM_LOGS}/perftest-${TEST_SCENARIO}.log
 
