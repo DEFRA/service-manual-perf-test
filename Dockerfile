@@ -1,9 +1,13 @@
 FROM defradigital/cdp-perf-test-docker:latest
 
-# Install Custom Thread Groups plugin for JMeter 5.6.3
-RUN wget https://jmeter-plugins.org/files/packages/custom-thread-groups-2.9.zip -O /tmp/ctg.zip \
-    && unzip /tmp/ctg.zip -d /opt/apache-jmeter-5.6.3/lib/ext \
-    && rm /tmp/ctg.zip
+# Install Custom Thread Groups plugin into the actual JMeter lib/ext
+RUN apt-get update && apt-get install -y wget unzip \
+ && wget https://jmeter-plugins.org/files/packages/custom-thread-groups-2.9.zip -O /tmp/ctg.zip \
+ && unzip -o /tmp/ctg.zip -d /tmp/ctg_unpacked \
+ && mkdir -p /opt/apache-jmeter-5.6.3/lib/ext \
+ && cp /tmp/ctg_unpacked/*.jar /opt/apache-jmeter-5.6.3/lib/ext/ \
+ && rm -rf /tmp/ctg.zip /tmp/ctg_unpacked \
+ && apt-get remove -y wget unzip && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/perftest
 
