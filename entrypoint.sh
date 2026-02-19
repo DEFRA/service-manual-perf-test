@@ -28,7 +28,6 @@ SERVICE_PORT=${SERVICE_PORT:-443}
 SERVICE_URL_SCHEME=${SERVICE_URL_SCHEME:-https}
 
 # Increase JVM heap for JMeter
-export JVM_ARGS="-Xms4g -Xmx12g"
 
 # Run the test suite
 jmeter -n -t ${SCENARIOFILE} -e -l "${REPORTFILE}" -o ${JM_REPORTS} -j ${LOGFILE} -f \
@@ -36,6 +35,11 @@ jmeter -n -t ${SCENARIOFILE} -e -l "${REPORTFILE}" -o ${JM_REPORTS} -j ${LOGFILE
 -Jdomain="${SERVICE_ENDPOINT}" \
 -Jport="${SERVICE_PORT}" \
 -Jprotocol="${SERVICE_URL_SCHEME}"
+-Jjmeterengine.startup.delay=0 \
+-Jjava.awt.headless=true \
+-Jserver.rmi.ssl.disable=true \
+-JJVM_ARGS="-Xms4g -Xmx12g"
+
 
 # Publish the results into S3 so they can be displayed in the CDP Portal
 if [ -n "$RESULTS_OUTPUT_S3_PATH" ]; then
